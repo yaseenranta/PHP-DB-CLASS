@@ -1,5 +1,5 @@
 <?php
-
+/** Author : Muhammad Yaseen Ranta | Email : yaseenranta76@gmail.com **/
 class YR_database
 {
 
