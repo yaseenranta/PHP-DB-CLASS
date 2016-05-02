@@ -1,4 +1,4 @@
-#PHP DB class use demo
+#PHP DB class Demo
 First initialize YR_database class <br>
 $db = new YR_database("localhost","testing","root",""); <br>
 Then set Attributes using $db->setAttribute() Method <br>
