@@ -1,1 +1,1 @@
-#PHP database class
+#PHP database class  updated
