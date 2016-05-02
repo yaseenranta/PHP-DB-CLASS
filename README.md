@@ -7,21 +7,28 @@ $db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE,\PDO::FETCH_ASSOC); <br>
 
 #SELECT QUERY
 $db->select("column1,column2,column3");
+
 $db->from("tablename");
+
 $result = $db->results();
 
 #where clause 
 $db->select("column1,column2,column3");
+
 $db->from("tablename");
+
 $db->where('column_name','value');
+
 $result = $db->results();
 
 #GET TABLE RECORD
 $db->get('tablename');
+
 $result = $db->results();
 
 #GET ONE RECORD OF TABLE
 $db->getOne('tablename');
+
 $result = $db->results();
 
 #INSERT RECORD
@@ -29,6 +36,7 @@ $columnvalarray = [
 	'username' => 'demouser',
 	'description' => 'demo user description'
 ];
+
 $db->insert($columnvalarray,'tablename');
 
 #update RECORD
@@ -38,6 +46,7 @@ $columnvalarray = [
 ];
 
 $db->update($columnvalarray,'tablename');
+
 $db->where('id',1);
 
 #Delete RECORD
@@ -47,6 +56,7 @@ $columnvalarray = [
 ];
 
 $db->delete('tablename');
+
 $db->where('id',1);
 
 #More Method will be add soon........... 
