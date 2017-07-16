@@ -4,8 +4,7 @@ class YR_database
 {
 
 	public $HoldResults = true;
-	public $yr_col;
-	public $yr_another_col;
+	public $yr_11;
 	private $host;
 	private $dbname;
 	private $username;
