@@ -3,20 +3,21 @@
 class YR_database
 {
 
+	public $HoldResults = true;
+	public $yr_col;
+	public $yr_another_col;
 	private $host;
 	private $dbname;
 	private $username;
 	private $password;
 	private $query;
 	private $setAttribute;
-	public $HoldResults = true;
 	private $where;
 	private $limit;
 	private $select;
 	private $colum_name;
 	private $colum_value;
-	public $yr_col;
-	
+
 	function __construct($host,$dbname,$username,$password){
 	
 		//$config =  config\get_config();
@@ -38,13 +39,34 @@ class YR_database
 			die('Database not connect...'.$e->getMessage());	
 		}	
 	}
+
+	/**
+		param $key, $value
+		set pdo attribute
+	**/
+	public function setAttribute($key,$value)
+	{
+		$this->setAttribute[$key] = $value;
+	}
+	
+	/**
+		Param $query
+		Run Custom Query
+	**/
+
+	public function query($query)
+	{
+		$this->query = $query;
+		$this->BuildQuery();
+	}
+	
 	/**
 		BuildQuery() method build insert,update,delete and where clause query
 	**/
 	private function BuildQuery()
-	{	
+	{
 		$connection = $this->connection();
-		
+
 		$SetAttribute = $this->setAttribute;
 		foreach($SetAttribute as  $AttributeKey => $AttributeValue)
 		{
@@ -52,31 +74,31 @@ class YR_database
 		}
 		$query  = $this->query;
 		//$where = $this->where;
-		
+
 		$qw = '';
  		if(!empty($this->where)){
 				$query .= " where ";
 			foreach($this->where as $wk => $wv){
-				$qw .= "$wk = :$wk AND ";	
+				$qw .= "$wk = :$wk AND ";
 			}
 			$query .= $qw;
-			
+
 			$query = rtrim($query, ' ');
 			$query = rtrim($query, 'AND');
 			$query = rtrim($query, ' ');
-			
+
 		}
 		if($this->limit != '') { $query .= $this->limit; }
-			
+
 		$q = $connection->prepare($query);
 
-		if(!empty($this->where)){				
+		if(!empty($this->where)){
 			foreach($this->where as $wk => &$wv){
 				$q->bindParam(":$wk",$wv);
 			}
 		}
-	
-		if(!empty($this->bindParam)){			
+
+		if(!empty($this->bindParam)){
 			foreach($this->bindParam as $ck => &$cv){
 				//echo ":$ck";
 				$q->bindParam(":$ck",$cv);
@@ -84,31 +106,11 @@ class YR_database
 		}
 		//var_dump($q);
 		$q->execute();
-		
+
 		if($this->HoldResults != false){
 			$this->HoldResults = $q->fetchall();
 		}
 	}
-	
-	/**
-		param $key, $value
-		set pdo attribute
-	**/
-	public function setAttribute($key,$value)
-	{
-		$this->setAttribute[$key] = $value;		
-	}
-	
-	/** 
-		Param $query
-		Run Custom Query
-	**/
-	
-	public function query($query)
-	{
-		$this->query = $query;
-		$this->BuildQuery();
-	}	
 	
 	public function select($column_name){
 		$this->select  = "select $column_name ";
@@ -134,40 +136,15 @@ class YR_database
 		    	$this->where[$key] = $value;
 		}
 	}
+
 	/**
-		param $start,$end.1 parameter is require and 2 is optional
-		return string $limit variable 
-	**/
-	public function limit($start,$end = '')
-	{
-		if(!empty($start) && $end ==''){
-			$this->limit = " LIMIT $start";
-		}elseif(!empty($start) && !empty($end)){
-			$this->limit = " LIMIT $start,$end";
-		}else{
-			$this->limit = "";
-		}
-			return $this->limit;	
-	}
-	
-	/**
-		param : no paramter pass in results method 
-		return: result of query in the form of associative array 
+		param : no paramter pass in results method
+		return: result of query in the form of associative array
 	**/
 	public function results()
 	{
 	//	$this->BuildQuery();
 		return $this->HoldResults;
-	}
-	/**
-		param : $tablename. pass name of table
-		return all result of current table
-	**/
-	public function get($tablename)
-	{
-		$this->query = "select * from $tablename";
-		//$this->HoldResults = true;
-		$this->BuildQuery();
 	}
 	
 	/**
@@ -178,8 +155,35 @@ class YR_database
 	{
 		$this->limit(1);
 		$this->get($tablename);
-		
+
 //		$this->BuildQuery();
+	}
+
+	/**
+		param $start,$end.1 parameter is require and 2 is optional
+		return string $limit variable
+	**/
+	public function limit($start,$end = '')
+	{
+		if(!empty($start) && $end ==''){
+			$this->limit = " LIMIT $start";
+		}elseif(!empty($start) && !empty($end)){
+			$this->limit = " LIMIT $start,$end";
+		}else{
+			$this->limit = "";
+		}
+			return $this->limit;
+	}
+	
+	/**
+		param : $tablename. pass name of table
+		return all result of current table
+	**/
+	public function get($tablename)
+	{
+		$this->query = "select * from $tablename";
+		//$this->HoldResults = true;
+		$this->BuildQuery();
 	}
 	
 	public function insert($colum_name,$tablename){
