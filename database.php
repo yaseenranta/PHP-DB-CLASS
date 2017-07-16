@@ -15,7 +15,7 @@ class YR_database
 	private $select;
 	private $colum_name;
 	private $colum_value;
-	pubulic $yr_cols;
+	public $yr_cols;
 	
 	function __construct($host,$dbname,$username,$password){
 	
