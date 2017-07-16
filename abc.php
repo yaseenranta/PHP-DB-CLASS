@@ -8,6 +8,10 @@ class gitTesting{
         echo 'method found in test-2 branch';
     }
 
+    public function abcd(){
+        //method found in test 2 branch
+    }
+
 
     public function abddsdfds(){
 
