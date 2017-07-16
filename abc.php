@@ -13,7 +13,10 @@ class gitTesting{
 
     }
 
+   public function testOne(){
+        echo 'hmmm that cools';
 
+   }
 
 
 }
