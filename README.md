@@ -1,55 +1,48 @@
-#PHP DB class Demo
-First initialize YR_database class <br>
-$db = new YR_database("localhost","testing","root",""); <br>
-Then set Attributes using $db->setAttribute() Method <br>
-$db->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION); <br>
-$db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE,\PDO::FETCH_ASSOC); <br>
+### First initialize Database class ###
+    $db = new YR_database("localhost","testing","root","");
+### Then set Attributes using $db->setAttribute() Method ###
+    $db->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
+    $db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE,\PDO::FETCH_ASSOC);
 
-#SELECT QUERY
-$db->select("column1,column2,column3");
+### SELECT QUERY ###
+    $result = $db
+                ->select("column1,column2,column3")
+                ->from("tablename")
+                ->results();
 
-$db->from("tablename");
+### where clause ###
+    $result = $db
+        ->select("column1,column2,column3")
+        ->from("tablename")
+        ->where('column_name','value') 
+        ->results();
 
-$result = $db->results();
+### GET TABLE RECORD ###
+    $result = $db
+                ->get('tablename')
+                ->results();
 
-#where clause 
-$db->select("column1,column2,column3");
+### GET ONE RECORD OF TABLE ###
+    $db->getOne('tablename')
+    $result = $db->results();
 
-$db->from("tablename");
+### INSERT RECORD ###
+    $columnvalarray = [
+        'username' => 'demouser',
+        'description' => 'demo user description'
+    ];
+    $db->insert($columnvalarray,'tablename');
 
-$db->where('column_name','value');
+## UPDATE RECORD ###
+    $columnvalarray = [
+        'username' => 'demoupdated',
+        'description' => 'demo user updated description'
+    ];
+    $db
+        ->update($columnvalarray,'tablename')
+        ->where('id',1);
 
-$result = $db->results();
-
-#GET TABLE RECORD
-$db->get('tablename');
-
-$result = $db->results();
-
-#GET ONE RECORD OF TABLE
-$db->getOne('tablename');
-
-$result = $db->results();
-
-#INSERT RECORD
-$columnvalarray = [
-	'username' => 'demouser',
-	'description' => 'demo user description'
-];
-
-$db->insert($columnvalarray,'tablename');
-
-#update RECORD
-$columnvalarray = [
-	'username' => 'demoupdated',
-	'description' => 'demo user updated description'
-];
-
-$db->update($columnvalarray,'tablename');
-
-$db->where('id',1);
-
-#Delete RECORD
+### DELETE RECORD ###
 $columnvalarray = [
 	'username' => 'demoupdated',
 	'description' => 'demo user updated description'
@@ -59,4 +52,4 @@ $db->delete('tablename');
 
 $db->where('id',1);
 
-#More Method will be add soon........... 
+### More Method will be add soon........... ###

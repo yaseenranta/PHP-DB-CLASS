@@ -56,6 +56,7 @@ class YR_database
 	{
 		$this->query = $query;
 		$this->BuildQuery();
+		return $this;
 	}
 	
 	/**
@@ -112,12 +113,14 @@ class YR_database
 	
 	public function select($column_name){
 		$this->select  = "select $column_name ";
+		return $this;
 	}
 	
 	public function from($tablename){
 		
 		$this->query = $this->select."from $tablename";
 		$this->BuildQuery();
+        return $this;
 	}
 	
 	/**
@@ -133,6 +136,7 @@ class YR_database
 		}else{
 		    	$this->where[$key] = $value;
 		}
+        return $this;
 	}
 
 	/**
@@ -143,6 +147,7 @@ class YR_database
 	{
 	//	$this->BuildQuery();
 		return $this->HoldResults;
+        return $this;
 	}
 	
 	/**
@@ -155,6 +160,7 @@ class YR_database
 		$this->get($tablename);
 
 //		$this->BuildQuery();
+        return $this;
 	}
 
 	/**
@@ -182,6 +188,7 @@ class YR_database
 		$this->query = "select * from $tablename";
 		//$this->HoldResults = true;
 		$this->BuildQuery();
+        return $this;
 	}
 	
 	public function insert($colum_name,$tablename){
@@ -198,7 +205,7 @@ class YR_database
 		$this->bindParam = $colum_name;
 		$this->HoldResults = false;	
 		$this->BuildQuery();
-		
+        return $this;
 	}
 	
 	public function update($col_name,$tablename){
@@ -213,6 +220,7 @@ class YR_database
 		$this->bindParam = $col_name;
 		$this->HoldResults = false;	
 		$this->BuildQuery();
+        return $this;
 	}
 		
 	/**
@@ -224,14 +232,14 @@ class YR_database
 		$this->query = "delete from $tablename";
 		$this->HoldResults = false;
 		$this->BuildQuery();
+        return $this;
 	}
 	
 }   
 
-//$db = new YR_database();
-//$db->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
-//$db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE,\PDO::FETCH_ASSOC); 
-
-	
-
+function dd($arg){
+    echo '<pre>';
+    print_r($arg);
+    echo '</pre>';
+}
 ?>
