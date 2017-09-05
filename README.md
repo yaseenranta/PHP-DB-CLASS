@@ -43,13 +43,11 @@
         ->where('id',1);
 
 ### DELETE RECORD ###
-$columnvalarray = [
-	'username' => 'demoupdated',
-	'description' => 'demo user updated description'
-];
+    $columnvalarray = [
+	    'username' => 'demoupdated',
+	    'description' => 'demo user updated description'
+    ];
 
-$db->delete('tablename');
-
-$db->where('id',1);
+    $db->delete('tablename')->where('id',1);
 
 ### More Method will be add soon........... ###
